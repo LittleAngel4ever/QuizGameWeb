@@ -1,8 +1,251 @@
-#block2
+:root 
 {
-    display: none;
+    --bg: #0b0c10;               
+    --surface: #121317;         
+    --card: rgba(255, 255, 255, 0.06);
+    --text: #e9eaee;            
+    --text-muted: #b7bac3;
+    --accent: #e10600;          
+    --accent-2: #2dd4bf;       
+    --focus: #5ac8fa;         
+    --border: rgba(255, 255, 255, 0.12);
+    --shadow: 0 10px 30px rgba(0,0,0,0.45);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --speed: 220ms;
 }
-#block3
+@media (prefers-color-scheme: light) 
 {
+    :root 
+    {
+        --bg: #f7f8fa;
+        --surface: #ffffff;
+        --card: rgba(0, 0, 0, 0.05);
+        --text: #0d0f14;
+        --text-muted: #505665;
+        --border: rgba(0, 0, 0, 0.12);
+        --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+}
+*, *::before, *::after 
+{ 
+    box-sizing: border-box; 
+}
+html, body 
+{
+    height: 100%;
+    background: radial-gradient(1200px 600px at 20% 0%, rgba(225, 6, 0, 0.15), transparent 45%),
+                radial-gradient(800px 500px at 100% 100%, rgba(90, 200, 250, 0.18), transparent 40%),
+                var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+}
+body 
+{
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+#block1, #block2, #block3 
+{
+    width: min(720px, 92vw);
+    background: var(--card);
+    backdrop-filter: saturate(1.2) blur(16px);
+    -webkit-backdrop-filter: saturate(1.2) blur(16px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
     display: none;
+    transform: translate3d(0, 0, 0);
+    animation: cardIn var(--speed) var(--ease) both;
+}
+#block1 
+{ 
+    display: block; 
+} 
+@keyframes cardIn 
+{
+    from 
+    { 
+        opacity: 0; 
+        transform: translateY(12px) scale(0.98); 
+    }
+    to   
+    { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+h1 
+{
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    font-size: clamp(28px, 3.2vw, 36px);
+}
+#score, #quest1 
+{
+    color: var(--text);
+    margin: 8px 0 20px;
+    font-size: clamp(18px, 2.2vw, 20px);
+}
+button 
+{
+    font: 600 16px var(--font-sans);
+    color: var(--text);
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    outline: none;
+    cursor: pointer;
+    transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease), background var(--speed) var(--ease), border-color var(--speed) var(--ease);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    will-change: transform;
+}
+button:focus-visible 
+{
+    border-color: var(--focus);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--focus) 50%, transparent);
+}
+button:hover 
+{
+    transform: translateY(-1px);
+}
+button:active 
+{
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.28) inset;
+}
+#start_but, #back 
+{
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 78%, #fff 0%), color-mix(in oklab, var(--accent) 62%, #000 0%));
+    border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+    color: #fff;
+}
+#back 
+{
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent-2) 82%, #fff 0%), color-mix(in oklab, var(--accent-2) 62%, #000 0%));
+    border-color: color-mix(in oklab, var(--accent-2) 55%, var(--border));
+}
+#block2 > div 
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+.answer 
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    padding: 14px 16px;
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+}
+.answer::before 
+{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), transparent 80%);
+    border-top-left-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
+    transition: width var(--speed) var(--ease);
+}
+.answer:hover::before 
+{
+    width: 6px;
+}
+.answer.correct 
+{
+    border-color: color-mix(in oklab, #22c55e 60%, var(--border));
+    background: linear-gradient(180deg, rgba(34,197,94,0.20), rgba(34,197,94,0.10));
+}
+.answer.wrong 
+{
+    border-color: color-mix(in oklab, #ef4444 60%, var(--border));
+    background: linear-gradient(180deg, rgba(239,68,68,0.18), rgba(239,68,68,0.08));
+}
+#block3 button 
+{
+    margin-top: 16px;
+}
+#block2 p, #block3 p 
+{
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+#block1 h1, #block3 h1 
+{
+    position: relative;
+    isolation: isolate;
+}
+#block1 h1::after, #block3 h1::after 
+{
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) skewX(-18deg);
+    width: 110px; height: 20px;
+    background: conic-gradient(from 45deg at 10px 10px, #fff 0 25%, #000 0 50%, #fff 0 75%, #000 0 100%);
+    opacity: 0.10;
+    filter: contrast(120%);
+    border-radius: 6px;
+    pointer-events: none;
+}
+@media (max-width: 560px) 
+{
+    #block2 > div 
+    { 
+        grid-template-columns: 1fr; 
+    }
+    button 
+    { 
+        padding: 12px 14px; 
+    }
+}
+@media (prefers-reduced-motion: reduce) 
+{
+    * 
+    { 
+        animation: none !important; 
+        transition: none !important; 
+    }
+}
+#block2::before 
+{
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--focus), var(--accent-2));
+    opacity: 0.18;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+}
+#block2 
+{ 
+    position: relative; 
+}
+button, .answer 
+{ 
+    min-height: 44px; 
+}
+.hidden 
+{ 
+    display: none !important; 
 }
