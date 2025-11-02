@@ -12,38 +12,38 @@ const scoreText = document.getElementById("score");
 let score = 0;
 
 let arrayObject = [];
-for(let i = 0; i < arrayQuiz.length; ++i){
+for(let i = 0; i < arrayQuiz.length; ++i) {
     arrayObject[i] = new Questions(arrayQuiz[i].question, arrayQuiz[i].answerText, arrayQuiz[i].correct);
 }
 
-function quest(j){
+function quest(j) {
     quest1.textContent = arrayObject[j].questions;
-    for(let i = 0; i < answersBut.length; ++i){
+    for(let i = 0; i < answersBut.length; ++i) {
         answersBut[i].textContent = arrayObject[j].answer[i];
-        answersBut[i].onclick = function(){
-            if(arrayObject[j].correct === i){
+        answersBut[i].onclick = function() {
+            if(arrayObject[j].correct === i) {
                 console.log('good');
                 score += 1;
-            } else{
+            } else {
                 console.log("not good");
             }
 
-            if(j < arrayObject.length - 1){
+            if(j < arrayObject.length - 1) {
                 quest(++j);
-            } else{
+            } else {
                 endQuiz();
             }
         }
     }  
 }
 
-function start_quiz(){
+function start_quiz() {
     block2.style.display = 'block';
     block1.style.display = 'none';
     quest(0);
 }
 
-function endQuiz(){
+function endQuiz() {
     scoreText.textContent = `Ваш счёт: ${score}`;
     block2.style.display = 'none';
     block3.style.display = 'block';
